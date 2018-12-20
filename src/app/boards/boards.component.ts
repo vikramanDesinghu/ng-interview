@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { BoardService } from "../board.service";
 import {
   CdkDragDrop,
   moveItemInArray,
@@ -40,8 +41,15 @@ export class BoardsComponent implements OnInit {
     }
   ];
 
-  constructor() {}
-  ngOnInit() {}
+  constructor(private boardService: BoardService) {}
+  ngOnInit() {
+    let localData = this.boardService.getData();
+    if (!localData) {
+      // this.storyBoard = [];
+    } else {
+      this.storyBoard = JSON.parse(localData);
+    }
+  }
 
   drop(event: CdkDragDrop<string[]>) {
     console.log(event);
@@ -60,5 +68,8 @@ export class BoardsComponent implements OnInit {
         event.currentIndex
       );
     }
+    setTimeout(() => {
+      this.boardService.saveData(this.storyBoard);
+    }, 250);
   }
 }
