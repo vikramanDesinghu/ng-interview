@@ -1,8 +1,32 @@
 <div cdkDropListGroup>
-  <app-list
-    class="example-container"
-    (saveDarag)="saveInLocal()"
-    *ngFor="let list of storyBoard"
-    [list]="list"
-  ></app-list>
+  <div class="list-container" *ngFor="let list of storyBoard">
+    <div class="card-header">
+      <span class="card-title">{{ list.listName }}</span>
+      <app-single-form
+      *ngIf="list.listName.length === 0"
+      (saveForm)="saveList(list, $event)"
+      ></app-single-form>
+      <button class="add-new add-list" mat-button (click)="addList()">Add List</button>
+    </div>
+    <div
+      cdkDropList
+      [cdkDropListData]="list.cardList"
+      class="card-list"
+      (cdkDropListDropped)="drop($event)"
+    >
+      <div
+        class="card-box"
+        [cdkDragData]="item"
+        *ngFor="let item of list.cardList; let i = index"
+        cdkDrag
+      >
+        <span *ngIf="item.length !== 0">{{ item }}</span>
+        <app-single-form
+          *ngIf="item.length === 0"
+          (saveForm)="saveCard(list, i, $event)"
+        ></app-single-form>
+      </div>
+      <button class="add-new add-card" mat-button (click)="addCard(list.cardList)">Add Card</button>
+    </div>
+  </div>
 </div>

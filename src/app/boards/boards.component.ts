@@ -50,10 +50,45 @@ export class BoardsComponent implements OnInit {
       this.storyBoard = JSON.parse(localData);
     }
   }
-  saveInLocal() {
-    console.log("this.storyBoard", this.storyBoard);
+
+  drop(event: CdkDragDrop<string[]>) {
+    console.log(event);
+
+    if (event.previousContainer === event.container) {
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex
+      );
+    }
     setTimeout(() => {
       this.boardService.saveData(this.storyBoard);
     }, 250);
+  }
+
+  addList() {
+    this.storyBoard.push({
+      listName: "",
+      cardList: []
+    });
+  }
+  addCard(list:string[]) {
+    list.push("");
+  }
+  saveList(list:any, data:string) {
+    list.listName = data;
+    this.boardService.saveData(this.storyBoard);
+  }
+  saveCard(itemData, index, data:string) {
+    console.log('itemData', itemData.cardList[index]);
+    itemData.cardList[index] = data;
+    this.boardService.saveData(this.storyBoard);
   }
 }
