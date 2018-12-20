@@ -14,13 +14,13 @@ import {
 export class BoardsComponent implements OnInit {
   storyBoard = [
     {
-      boardName: "toDo",
-      list: ["Get to work", "Pick up groceries", "Go home", "Fall asleep"]
+      listName: "toDo",
+      cardList: ["Get to work", "Pick up groceries", "Go home", "Fall asleep"]
     },
 
     {
-      boardName: "currentlyWorking",
-      list: [
+      listName: "currentlyWorking",
+      cardList: [
         "Get up",
         "Brush teeth",
         "Take a shower",
@@ -30,8 +30,8 @@ export class BoardsComponent implements OnInit {
     },
 
     {
-      boardName: "completed",
-      list: [
+      listName: "completed",
+      cardList: [
         "Get up completed",
         "Brush teeth completed",
         "Take a shower completed",
@@ -50,24 +50,8 @@ export class BoardsComponent implements OnInit {
       this.storyBoard = JSON.parse(localData);
     }
   }
-
-  drop(event: CdkDragDrop<string[]>) {
-    console.log(event);
-
-    if (event.previousContainer === event.container) {
-      moveItemInArray(
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-    } else {
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex
-      );
-    }
+  saveInLocal() {
+    console.log("this.storyBoard", this.storyBoard);
     setTimeout(() => {
       this.boardService.saveData(this.storyBoard);
     }, 250);

@@ -1,3 +1,18 @@
-<p>
-  list works!
-</p>
+<div class="example-container">
+  <h2>{{ list.listName }}</h2>
+  <div
+    cdkDropList
+    [cdkDropListData]="list.cardList"
+    class="example-list"
+    (cdkDropListDropped)="drop($event)"
+  >
+    <div
+      class="example-box"
+      [cdkDragData]="item"
+      *ngFor="let item of list.cardList"
+      cdkDrag
+    >
+      {{ item }}
+    </div>
+  </div>
+</div>
