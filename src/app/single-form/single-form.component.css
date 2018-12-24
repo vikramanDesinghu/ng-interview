@@ -23,3 +23,19 @@ input.ng-invalid:focus {
 i.material-icons:hover {
   cursor: pointer;
 }
+p.error-msg {
+  left: 15px;
+  position: relative;
+  color: #f44336;
+  margin: 0;
+}
+.form-container{
+  position: relative;
+}
+.add-new {
+  display: inline-block;
+  float: right;
+  position: absolute;
+  top: 7px;
+  right: 0;
+}

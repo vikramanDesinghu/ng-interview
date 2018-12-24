@@ -1,10 +1,15 @@
-<form [formGroup]="singleForm" (ngSubmit)="onSubmit()" novalidate>
-  <input
-    type="text"
-    class="description"
-    name="description"
-    [(ngModel)]="description"
-    formControlName="description"
-  />
-  <i (click)="onSubmit()" class="add-new material-icons"> save </i>
-</form>
+<div class="form-container">
+  <form [formGroup]="singleForm" (ngSubmit)="onSubmit()" novalidate>
+    <input
+      type="text"
+      class="description"
+      name="description"
+      [(ngModel)]="description"
+      formControlName="description"
+    />
+    <p class="error-msg" *ngIf="this.singleForm.invalid">
+      please enter description
+    </p>
+    <i (click)="onSubmit()" class="add-new material-icons"> save </i>
+  </form>
+</div>
