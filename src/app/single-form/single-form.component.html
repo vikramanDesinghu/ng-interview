@@ -1,4 +1,10 @@
 <form [formGroup]="singleForm" (ngSubmit)="onSubmit()" novalidate>
-  <input type="text" class="description" name="description" formControlName="description" />
-  <button class="add-new" mat-button>add</button>
+  <input
+    type="text"
+    class="description"
+    name="description"
+    [(ngModel)]="description"
+    formControlName="description"
+  />
+  <i (click)="onSubmit()" class="add-new material-icons"> save </i>
 </form>

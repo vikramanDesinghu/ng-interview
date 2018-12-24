@@ -1,12 +1,42 @@
-<div cdkDropListGroup>
-  <div class="list-container" *ngFor="let list of storyBoard">
+<div class="container" cdkDropListGroup>
+  <div class="board-details">
+    <p>Total Cards : {{ totalCards }}</p>
+  </div>
+  <div class="list-container" *ngFor="let list of storyBoard; let i = index">
     <div class="card-header">
-      <span class="card-title">{{ list.listName }}</span>
+      <span *ngIf="list.hasSaved" class="card-title"
+        >{{ list.listName }}
+        {{ list.cardList.length ? "(" + list.cardList.length + ")" : "" }}</span
+      >
       <app-single-form
-      *ngIf="list.listName.length === 0"
-      (saveForm)="saveList(list, $event)"
+        *ngIf="!list.hasSaved"
+        [description]="list.listName"
+        (saveForm)="saveList(list, $event)"
       ></app-single-form>
-      <button class="add-new add-list" mat-button (click)="addList()">Add List</button>
+      <div class="tool-container">
+        <button
+          *ngIf="list.hasSaved"
+          class="add-new add-list"
+          mat-button
+          (click)="addList()"
+        >
+          Add List
+        </button>
+        <i
+          *ngIf="list.hasSaved"
+          class="material-icons add-new add-list"
+          (click)="toEdit(list)"
+        >
+          edit
+        </i>
+        <i
+          *ngIf="list.hasSaved"
+          class="material-icons add-new add-list"
+          (click)="openPrompt(storyBoard, i)"
+        >
+          delete
+        </i>
+      </div>
     </div>
     <div
       cdkDropList
@@ -20,13 +50,39 @@
         *ngFor="let item of list.cardList; let i = index"
         cdkDrag
       >
-        <span *ngIf="item.length !== 0">{{ item }}</span>
+        <div *ngIf="item.hasSaved" class="car-content">
+          <span>{{ item.description }}</span>
+          <div class="tool-container">
+            <i
+              *ngIf="item.hasSaved"
+              class="material-icons add-new add-list"
+              (click)="toEdit(item)"
+            >
+              edit
+            </i>
+
+            <i
+              *ngIf="item.hasSaved"
+              (click)="openPrompt(list.cardList, i)"
+              class="material-icons add-new add-list"
+            >
+              delete
+            </i>
+          </div>
+        </div>
         <app-single-form
-          *ngIf="item.length === 0"
+          *ngIf="!item.hasSaved"
+          [description]="item.description"
           (saveForm)="saveCard(list, i, $event)"
         ></app-single-form>
       </div>
-      <button class="add-new add-card" mat-button (click)="addCard(list.cardList)">Add Card</button>
+      <button
+        class="add-new add-card"
+        mat-button
+        (click)="addCard(list.cardList)"
+      >
+        Add Card
+      </button>
     </div>
   </div>
 </div>

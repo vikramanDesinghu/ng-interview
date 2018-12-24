@@ -1,6 +1,22 @@
+.add-new {
+  display: inline-block;
+  float: right;
+  position: relative;
+  top: 5px;
+}
+input.description {
+  padding: 5px;
+  margin: 5px;
+  height: 20px;
+  box-shadow: 1px 3px 3px #ccc;
+  border: none;
+  display: inline-block;
+  width: 80%;
+}
 input.ng-invalid {
   border: 1px solid red;
 }
-.add-new {
-  display: inline-block;
+input.ng-invalid:focus {
+  border: 1px solid red;
+  outline: none;
 }

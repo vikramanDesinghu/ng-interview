@@ -1,10 +1,12 @@
 import { Component, OnInit } from "@angular/core";
 import { BoardService } from "../board.service";
+import { ConfirmationPrompts } from "./confirmation-prompts/confirmation-prompts.component";
 import {
   CdkDragDrop,
   moveItemInArray,
   transferArrayItem
 } from "@angular/cdk/drag-drop";
+import { MatDialog } from "@angular/material";
 
 @Component({
   selector: "app-boards",
@@ -12,36 +14,44 @@ import {
   styleUrls: ["./boards.component.css"]
 })
 export class BoardsComponent implements OnInit {
+  totalCards: number;
   storyBoard = [
     {
-      listName: "toDo",
-      cardList: ["Get to work", "Pick up groceries", "Go home", "Fall asleep"]
+      listName: "to-do tasks",
+      hasSaved: true,
+      cardList: [
+        { description: "Check e-mail", hasSaved: true },
+        { description: "Walk dog", hasSaved: true }
+      ]
     },
 
     {
-      listName: "currentlyWorking",
+      listName: "currently working",
+      hasSaved: true,
       cardList: [
-        "Get up",
-        "Brush teeth",
-        "Take a shower",
-        "Check e-mail",
-        "Walk dog"
+        { description: "Brush teeth", hasSaved: true },
+        { description: "Take a shower", hasSaved: true }
       ]
     },
 
     {
       listName: "completed",
-      cardList: [
-        "Get up completed",
-        "Brush teeth completed",
-        "Take a shower completed",
-        "Check e-mail completed",
-        "Walk dog completed"
-      ]
+      hasSaved: true,
+      cardList: [{ description: "Get up", hasSaved: true }]
     }
   ];
 
-  constructor(private boardService: BoardService) {}
+  constructor(private boardService: BoardService, public dialog: MatDialog) {}
+
+  openPrompt(arry, index) {
+    const dialogRef = this.dialog.open(ConfirmationPrompts);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.removeItem(arry, index);
+      }
+    });
+  }
+
   ngOnInit() {
     let localData = this.boardService.getData();
     if (!localData) {
@@ -49,8 +59,12 @@ export class BoardsComponent implements OnInit {
     } else {
       this.storyBoard = JSON.parse(localData);
     }
+    this.totalCards = this.storyBoard.reduce(this.reducer, 0);
   }
+  reducer = (currentValue, accumulator) =>
+    accumulator.cardList.length + currentValue;
 
+  onNoClick() {}
   drop(event: CdkDragDrop<string[]>) {
     console.log(event);
 
@@ -76,19 +90,36 @@ export class BoardsComponent implements OnInit {
   addList() {
     this.storyBoard.push({
       listName: "",
+      hasSaved: false,
       cardList: []
     });
   }
-  addCard(list:string[]) {
-    list.push("");
+  addCard(list: any) {
+    list.push({ description: "", hasSaved: false });
+    this.totalCards = this.storyBoard.reduce(this.reducer, 0);
   }
-  saveList(list:any, data:string) {
+  removeItem(items: any, index: number) {
+    items.splice(index, 1);
+    this.boardService.saveData(this.storyBoard);
+    this.totalCards = this.storyBoard.reduce(this.reducer, 0);
+  }
+  toEdit(item) {
+    item.hasSaved = false;
+  }
+  saveList(list: any, data: string) {
     list.listName = data;
+    list.hasSaved = true;
     this.boardService.saveData(this.storyBoard);
   }
-  saveCard(itemData, index, data:string) {
-    console.log('itemData', itemData.cardList[index]);
-    itemData.cardList[index] = data;
+  saveCard(itemData, index, data: any) {
+    console.log("itemData", itemData.cardList[index]);
+    itemData.cardList[index] = { description: data, hasSaved: true };
     this.boardService.saveData(this.storyBoard);
   }
 }
+
+@Component({
+  selector: "dialog-content-example-dialog",
+  templateUrl: "dialog-content-example-dialog.html"
+})
+export class DialogContentExampleDialog {}

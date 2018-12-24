@@ -1,6 +1,5 @@
-import { Component, OnInit, Output, EventEmitter } from "@angular/core";
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-
 
 @Component({
   selector: "app-single-form",
@@ -9,6 +8,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 })
 export class SingleFormComponent implements OnInit {
   singleForm: FormGroup;
+  @Input() description: string;
   @Output() saveForm = new EventEmitter();
   constructor(public fb: FormBuilder) {}
 

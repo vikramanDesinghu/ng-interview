@@ -1,3 +1,6 @@
+.container {
+  padding: 25px;
+}
 .list-container {
   min-height: 150px;
   position: relative;
@@ -21,7 +24,7 @@
 }
 
 .card-box {
-  padding: 20px 10px;
+  padding: 10px;
   border-bottom: solid 1px #ccc;
   color: rgba(0, 0, 0, 0.87);
   display: flex;
@@ -76,11 +79,42 @@ span.card-title {
   display: inline-block;
 }
 .add-new.add-list {
-  position: absolute;
-  right: 0;
+  position: relative;
+  float: right;
 }
 .add-new.add-card {
   position: absolute;
   bottom: 5px;
   left: 5px;
+}
+app-single-form {
+  width: 100%;
+}
+.material-icons:hover {
+  cursor: pointer;
+}
+.car-content i.material-icons {
+  float: right;
+  display: inline-block;
+  position: relative;
+}
+.card-box.cdk-drag {
+  position: relative;
+}
+.tool-container {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+.car-content {
+  display: inline-block;
+  width: 100%;
+  padding-right: 50px;
+}
+span.card-title {
+  display: inline-block;
+  max-width: 250px;
+}
+.tool-container i.material-icons {
+  padding: 5px 0px;
 }
