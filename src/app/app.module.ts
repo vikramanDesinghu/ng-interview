@@ -11,25 +11,17 @@ import { MatMenuModule } from "@angular/material/menu";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
-import {
-  BoardsComponent,
-  DialogContentExampleDialog
-} from "./boards/boards.component";
+import { BoardsComponent } from "./boards/boards.component";
 import { ConfirmationPrompts } from "./boards/confirmation-prompts/confirmation-prompts.component";
 
-import { ClickComponent } from "./click/click.component";
-import { MatBoardsComponent } from "./mat-boards/mat-boards.component";
 import { SingleFormComponent } from "./single-form/single-form.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     BoardsComponent,
-    ClickComponent,
-    MatBoardsComponent,
     SingleFormComponent,
-    ConfirmationPrompts,
-    DialogContentExampleDialog
+    ConfirmationPrompts
   ],
   imports: [
     BrowserModule,
@@ -45,6 +37,6 @@ import { SingleFormComponent } from "./single-form/single-form.component";
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [DialogContentExampleDialog, ConfirmationPrompts]
+  entryComponents: [ConfirmationPrompts]
 })
 export class AppModule {}

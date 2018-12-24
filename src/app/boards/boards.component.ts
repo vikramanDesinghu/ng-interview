@@ -121,9 +121,3 @@ export class BoardsComponent implements OnInit {
     this.totalCards = this.storyBoard.reduce(this.reducer, 0);
   }
 }
-
-@Component({
-  selector: "dialog-content-example-dialog",
-  templateUrl: "dialog-content-example-dialog.html"
-})
-export class DialogContentExampleDialog {}
