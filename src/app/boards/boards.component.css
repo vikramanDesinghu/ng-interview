@@ -90,14 +90,6 @@ span.card-title {
 app-single-form {
   width: 100%;
 }
-.material-icons:hover {
-  cursor: pointer;
-}
-.car-content i.material-icons {
-  float: right;
-  display: inline-block;
-  position: relative;
-}
 .card-box.cdk-drag {
   position: relative;
 }
@@ -109,12 +101,13 @@ app-single-form {
 .car-content {
   display: inline-block;
   width: 100%;
-  padding-right: 50px;
 }
-span.card-title {
-  display: inline-block;
-  max-width: 250px;
+button.mat-icon-button {
+  float: right;
 }
 .tool-container i.material-icons {
   padding: 5px 0px;
+}
+.material-icons i.material-icons:hover {
+  cursor: pointer;
 }

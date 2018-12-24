@@ -17,7 +17,7 @@ export class BoardsComponent implements OnInit {
   totalCards: number;
   storyBoard = [
     {
-      listName: "to-do tasks",
+      listName: "to-do",
       hasSaved: true,
       cardList: [
         { description: "Check e-mail", hasSaved: true },
@@ -112,9 +112,13 @@ export class BoardsComponent implements OnInit {
     this.boardService.saveData(this.storyBoard);
   }
   saveCard(itemData, index, data: any) {
-    console.log("itemData", itemData.cardList[index]);
     itemData.cardList[index] = { description: data, hasSaved: true };
     this.boardService.saveData(this.storyBoard);
+  }
+  removeAll(board) {
+    board.cardList = [];
+    this.boardService.saveData(this.storyBoard);
+    this.totalCards = this.storyBoard.reduce(this.reducer, 0);
   }
 }
 

@@ -20,3 +20,6 @@ input.ng-invalid:focus {
   border: 1px solid red;
   outline: none;
 }
+i.material-icons:hover {
+  cursor: pointer;
+}

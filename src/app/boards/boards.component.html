@@ -13,30 +13,27 @@
         [description]="list.listName"
         (saveForm)="saveList(list, $event)"
       ></app-single-form>
-      <div class="tool-container">
-        <button
-          *ngIf="list.hasSaved"
-          class="add-new add-list"
-          mat-button
-          (click)="addList()"
-        >
-          Add List
+      <button *ngIf="list.hasSaved" mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button (click)="openPrompt(storyBoard, i)" mat-menu-item>
+          <mat-icon>delete</mat-icon>
+          <span>Remove</span>
         </button>
-        <i
-          *ngIf="list.hasSaved"
-          class="material-icons add-new add-list"
-          (click)="toEdit(list)"
-        >
-          edit
-        </i>
-        <i
-          *ngIf="list.hasSaved"
-          class="material-icons add-new add-list"
-          (click)="openPrompt(storyBoard, i)"
-        >
-          delete
-        </i>
-      </div>
+        <button (click)="toEdit(list)" mat-menu-item>
+          <mat-icon>edit</mat-icon>
+          <span>Edit</span>
+        </button>
+        <button (click)="addList()" mat-menu-item>
+          <mat-icon>add</mat-icon>
+          <span>Add List</span>
+        </button>
+        <button (click)="removeAll(list)" mat-menu-item>
+          <mat-icon>delete_sweep</mat-icon>
+          <span>Remove All</span>
+        </button>
+      </mat-menu>
     </div>
     <div
       cdkDropList
@@ -51,25 +48,25 @@
         cdkDrag
       >
         <div *ngIf="item.hasSaved" class="car-content">
-          <span>{{ item.description }}</span>
-          <div class="tool-container">
-            <i
-              *ngIf="item.hasSaved"
-              class="material-icons add-new add-list"
-              (click)="toEdit(item)"
-            >
-              edit
-            </i>
-
-            <i
-              *ngIf="item.hasSaved"
-              (click)="openPrompt(list.cardList, i)"
-              class="material-icons add-new add-list"
-            >
-              delete
-            </i>
-          </div>
+          <p>{{ item.description }}</p>
         </div>
+        <button
+          *ngIf="item.hasSaved"
+          mat-icon-button
+          [matMenuTriggerFor]="sub_menu"
+        >
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #sub_menu="matMenu">
+          <button (click)="openPrompt(list.cardList, i)" mat-menu-item>
+            <mat-icon>delete</mat-icon>
+            <span>Remove</span>
+          </button>
+          <button (click)="toEdit(item)" mat-menu-item>
+            <mat-icon>edit</mat-icon>
+            <span>Edit</span>
+          </button>
+        </mat-menu>
         <app-single-form
           *ngIf="!item.hasSaved"
           [description]="item.description"
